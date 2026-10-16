@@ -4,7 +4,7 @@
 
 Inside AI Safety is an emerging research initiative bringing together researchers and students across institutions to study the safety of open-weight AI models. We connect representation-level evaluation, alignment, and selective intervention through collaborative research and mentorship.
 
-[Website](http://insideaisafety.org/) · [Join our Discord](https://discord.gg/RexBQW9Dt) · [Contact us](mailto:enyij@stanford.edu)
+[Website](https://insideaisafety.org/) · [Join our Discord](https://discord.gg/RexBQW9Dt) · [Contact us](mailto:enyij@stanford.edu)
 
 ## Our research
 
