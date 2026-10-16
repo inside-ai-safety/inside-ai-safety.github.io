@@ -4,7 +4,7 @@
 
 Inside AI Safety is an emerging research initiative bringing together researchers and students across institutions to study the safety of open-weight AI models. We connect representation-level evaluation, alignment, and selective intervention through collaborative research and mentorship.
 
-[Website](https://insideaisafety.org/) · [Join our Discord](https://discord.gg/RexBQW9Dt) · [Contact us](mailto:enyij@stanford.edu)
+[Website](https://insideaisafety.org/) · [Join our Discord](https://discord.gg/RexBQW9Dt) · [Contact us](mailto:info@insideaisafety.org)
 
 ## Our research
 
@@ -34,6 +34,6 @@ Prior work by our founder and collaborators informs our agenda:
 
 We welcome people interested in contributing to research, learning through collaborative projects, helping organize the initiative, or supporting our work.
 
-Join our [Discord community](https://discord.gg/RexBQW9Dt) to introduce yourself and share your interests, or [email us](mailto:enyij@stanford.edu) to discuss a collaboration.
+Join our [Discord community](https://discord.gg/RexBQW9Dt) to introduce yourself and share your interests, or [email us](mailto:info@insideaisafety.org) to discuss a collaboration.
 
 Founded by [Enyi (Olivia) Jiang](https://enyijiang.github.io/).
