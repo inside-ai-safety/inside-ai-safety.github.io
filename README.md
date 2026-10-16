@@ -27,7 +27,23 @@ Choose Settings → Pages → Source: GitHub Actions. The included workflow depl
 
 ## Custom domain: insideaisafety.org
 
-The domain is intentionally not activated until its DNS is ready. In GitHub Pages settings, add and verify `insideaisafety.org`, then configure the domain registrar following GitHub's current instructions. Add a root `CNAME` file containing `insideaisafety.org` when activating it. Enable HTTPS when GitHub has issued the certificate.
+GitHub repository: https://github.com/inside-ai-safety/inside-ai-safety.github.io
+
+Organization Pages address: https://inside-ai-safety.github.io/
+
+Custom domain: `insideaisafety.org`. Set this in repository Settings → Pages. This Actions deployment does not require a CNAME file.
+
+DNS setup (nameservers stay unchanged):
+
+| Type | Name | Value |
+| --- | --- | --- |
+| A | @ | 185.199.108.153 |
+| A | @ | 185.199.109.153 |
+| A | @ | 185.199.110.153 |
+| A | @ | 185.199.111.153 |
+| CNAME | www | inside-ai-safety.github.io |
+
+Do not alter email MX/TXT records. Enable Enforce HTTPS after DNS validates and GitHub provisions the certificate. The default Pages address redirects to the custom domain once it is configured, so DNS must also be completed for the site to be reachable.
 
 Official instructions: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
 
