@@ -1,50 +1,39 @@
 # Inside AI Safety
 
-A responsive English website for an emerging AI safety research initiative. Plain HTML, CSS, and JavaScript; no build step or package dependencies.
+**Understanding and improving AI safety through models’ internal representations.**
 
-## Preview
+Inside AI Safety is an emerging research initiative bringing together researchers and students across institutions to study the safety of open-weight AI models. We connect representation-level evaluation, alignment, and selective intervention through collaborative research and mentorship.
 
-Run `python3 -m http.server 8080` in this directory, then open http://localhost:8080.
+[Website](http://insideaisafety.org/) · [Join our Discord](https://discord.gg/RexBQW9Dt) · [Contact us](mailto:enyij@stanford.edu)
 
-## Edit
+## Our research
 
-- `index.html`: all text, research links, founder information, and contact email.
-- `styles.css`: layout, colors, typography, and responsive styles.
-- `script.js`: accessible research-lens interaction.
-- `assets/mark.svg`: original vector brand mark.
+We investigate three connected questions:
 
-The site uses Google Fonts with local system fallbacks. No analytics, cookies, contact-form backend, or donations are configured. The contact button opens an email to the founder's publicly listed address.
+- **Evaluation:** What risks can remain hidden behind safe-looking model outputs, and how can internal representations help us assess them?
+- **Alignment:** How can feedback from a model’s internal representations guide safer, more robust learning?
+- **Monitoring and intervention:** When should a safety mechanism intervene, and how can it do so while preserving useful capabilities?
 
-## Content status
+Our focus includes open-weight models, reproducible experiments, and methods that other researchers can inspect, test, and build on.
 
-The initiative is described as developing a nonprofit organization. No incorporation completion, IRS recognition, university endorsement, paid openings, or tax-deductible donations are asserted. Existing papers are clearly identified as prior work by the founder and collaborators, not work produced by the new organization. Update this wording once status and organizational details are confirmed.
+## Why we’re building this
 
-Sources: https://enyijiang.github.io/ and linked arXiv papers (2606.08044, 2601.22083, 2608.21278). Reviewed October 15, 2026.
+Researchers from different schools and backgrounds often share ideas but lack a common place to develop projects and access computational resources. We are building Inside AI Safety to support sustained collaboration, hands-on research mentorship, and shared research infrastructure.
 
-## GitHub Pages
+We aim to pursue project-based funding for experiments, computing resources, and paid research opportunities as resources become available.
 
-Choose Settings → Pages → Source: GitHub Actions. The included workflow deploys only the public website files on pushes to main.
+## Research foundations
 
-## Custom domain: insideaisafety.org
+Prior work by our founder and collaborators informs our agenda:
 
-GitHub repository: https://github.com/inside-ai-safety/inside-ai-safety.github.io
+- [When Behavioral Safety Evaluation Fails: A Representation-Level Perspective](https://arxiv.org/abs/2606.08044)
+- [Latent Adversarial Regularization for Offline Preference Optimization (GANPO)](https://arxiv.org/abs/2601.22083)
+- [CLEAR: Continuous Latent Adapter Routing for Utility-Preserving LLM Safety Alignment](https://arxiv.org/abs/2608.21278)
 
-Organization Pages address: https://inside-ai-safety.github.io/
+## Get involved
 
-Custom domain: `insideaisafety.org`. Set this in repository Settings → Pages. This Actions deployment does not require a CNAME file.
+We welcome people interested in contributing to research, learning through collaborative projects, helping organize the initiative, or supporting our work.
 
-DNS setup (nameservers stay unchanged):
+Join our [Discord community](https://discord.gg/RexBQW9Dt) to introduce yourself and share your interests, or [email us](mailto:enyij@stanford.edu) to discuss a collaboration.
 
-| Type | Name | Value |
-| --- | --- | --- |
-| A | @ | 185.199.108.153 |
-| A | @ | 185.199.109.153 |
-| A | @ | 185.199.110.153 |
-| A | @ | 185.199.111.153 |
-| CNAME | www | inside-ai-safety.github.io |
-
-Do not alter email MX/TXT records. Enable Enforce HTTPS after DNS validates and GitHub provisions the certificate. The default Pages address redirects to the custom domain once it is configured, so DNS must also be completed for the site to be reachable.
-
-Official instructions: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
-
-Do not put account passwords, API keys, tax records, private addresses, or donor information in this repository.
+Founded by [Enyi (Olivia) Jiang](https://enyijiang.github.io/).
