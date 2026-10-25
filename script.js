@@ -1,6 +1,6 @@
 const lenses = {
   evaluate: ['Evaluation asks where apparently safe behavior breaks down.', 'Find the hidden risk', '#364ac2'],
-  align: ['Alignment asks how internal feedback can shape safer learning.', 'Shape the representation', '#84613d'],
+  align: ['Alignment asks whether safety training can withstand downstream modification.', 'Shape the representation', '#84613d'],
   steer: ['Steering asks when to intervene—and when to let the model continue.', 'Guide the next action', '#287263']
 };
 document.querySelectorAll('[data-lens]').forEach(button => {
