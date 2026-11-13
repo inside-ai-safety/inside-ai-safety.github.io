@@ -42,3 +42,19 @@
 .article-end{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding-top:28px;margin-top:50px;font-size:14px}
 @media(max-width:1000px){.post-intro{gap:35px;grid-template-columns:minmax(0,1fr) 220px}.article-layout{grid-template-columns:180px minmax(0,1fr);gap:35px}.blog-card{gap:35px}.post-intro h1{font-size:43px}}
 @media(max-width:700px){.blog-heading{padding-top:32px;padding-bottom:25px}.blog-heading h1{font-size:40px}.blog-heading>p:last-child{font-size:16px}.blog-card{grid-template-columns:1fr;gap:28px;padding-top:28px}.blog-card-image{max-width:320px}.blog-list{padding-bottom:45px}.blog-card h2{font-size:30px}.post-header{padding-top:18px;padding-bottom:30px}.back-link{margin-bottom:30px}.post-intro{grid-template-columns:1fr;gap:30px}.post-intro h1{font-size:39px;letter-spacing:-1.6px}.post-subtitle{font-size:19px}.post-cover{max-width:270px}.article-layout{grid-template-columns:1fr;gap:28px}.article-toc{position:static}.article-toc ul{columns:2;column-gap:24px}.article-toc li{break-inside:avoid}.article-body{font-size:16px}.article-body h2{font-size:25px;margin-top:40px}.article-summary{padding:22px}.post-meta{font-size:12px}.article-end{flex-wrap:wrap}}
+
+/* Research progress articles */
+.blog-card + .blog-card{margin-top:48px}
+.research-post-intro{max-width:960px}
+.research-post-intro h1{font-size:clamp(36px,4.6vw,58px);line-height:1.15;letter-spacing:-1.8px;margin-bottom:22px}
+.research-figure{margin:34px 0}
+.research-figure img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:6px}
+.research-figure figcaption{font-size:13px;line-height:1.65;color:var(--muted);margin-top:14px}
+.research-table{overflow-x:auto;margin:24px 0;border:1px solid var(--line);border-radius:6px}
+.research-table table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.55;min-width:460px}
+.research-table th,.research-table td{padding:13px 15px;border-bottom:1px solid var(--line)}
+.research-table th{background:#eeebf5;text-align:left}
+.research-table tr:last-child td{border-bottom:0}
+.research-table:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.article-body [id^="ref-"]{scroll-margin-top:30px;font-size:14px}
+@media(max-width:700px){.research-post-intro h1{font-size:38px}.research-figure{margin:26px 0}.blog-card + .blog-card{margin-top:32px}}

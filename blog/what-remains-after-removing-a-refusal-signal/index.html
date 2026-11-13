@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>What Remains After Removing a Refusal Signal? — Inside AI Safety</title>
+<meta content="Three-model experiments separate refusal-related directions from harmfulness-label information, while harder generalization tests expose the limits of probe scores." name="description"/><meta content="#f6f5f0" name="theme-color"/>
+<link href="https://insideaisafety.org/blog/what-remains-after-removing-a-refusal-signal/" rel="canonical"/>
+<meta content="What Remains After Removing a Refusal Signal?" property="og:title"/><meta content="Three-model experiments separate refusal-related directions from harmfulness-label information, while harder generalization tests expose the limits of probe scores." property="og:description"/><meta content="article" property="og:type"/><meta content="https://insideaisafety.org/blog/what-remains-after-removing-a-refusal-signal/" property="og:url"/>
+<meta content="https://insideaisafety.org/assets/blog/refusal-signal/02-generalization.png" property="og:image"/><meta content="summary_large_image" name="twitter:card"/>
+<link href="/assets/mark.svg" rel="icon" type="image/svg+xml"/><link href="/styles.css" rel="stylesheet"/><link href="/blog/blog.css" rel="stylesheet"/><script defer="" src="/script.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "What Remains After Removing a Refusal Signal?", "description": "Three-model experiments separate refusal-related directions from harmfulness-label information, while harder generalization tests expose the limits of probe scores.", "datePublished": "2026-11-13", "author": {"@type": "Person", "name": "Enyi Jiang", "url": "https://enyijiang.github.io/"}, "reviewedBy": {"@type": "Person", "name": "Fan Wu", "url": "https://www.linkedin.com/in/wufan0415/"}, "publisher": {"@type": "Organization", "name": "Inside AI Safety", "url": "https://insideaisafety.org/"}, "image": "https://insideaisafety.org/assets/blog/refusal-signal/02-generalization.png", "mainEntityOfPage": "https://insideaisafety.org/blog/what-remains-after-removing-a-refusal-signal/"}</script>
+</head><body><a class="skip" href="#main">Skip to content</a><header class="header wrap">
+<a aria-label="Inside AI Safety home" class="brand" href="/"><img alt="" height="34" src="/assets/mark.svg" width="34"/><span>inside<span class="brand-light"> ai safety</span></span></a>
+<nav aria-label="Main navigation"><a href="/#research">Research</a><a href="/#work">Selected work</a><a aria-current="page" href="/blog/">Blog</a><a href="/#involved">Get involved</a><a href="/#support">Support</a><a class="nav-contact" href="https://discord.gg/RexBQW9Dt" rel="noopener noreferrer" target="_blank">Join Discord <span aria-hidden="true">↗</span></a></nav>
+</header><main id="main"><article class="research-post"><header class="post-header wrap"><a class="back-link" href="/blog/">← All posts</a><div class="research-post-intro"><p class="eyebrow">Research progress</p><h1>What Remains After Removing a Refusal Signal?</h1><p class="post-subtitle">Early experiments on separating refusal from harmfulness—and what a failed generalization test taught us.</p><p class="post-meta"><span>By <a href="https://enyijiang.github.io/">Enyi Jiang</a></span><span aria-hidden="true">·</span><span>Reviewed by <a href="https://www.linkedin.com/in/wufan0415/">Fan Wu</a></span><span aria-hidden="true">·</span><time datetime="2026-11-13">November 13, 2026</time></p></div></header><div class="article-layout wrap"><aside class="article-toc"><nav aria-label="On this page"><p class="eyebrow">In this article</p><ul><li><a href="#making-refusal-and-harmfulness-come-apart">Making refusal and harmfulness come apart</a></li><li><a href="#removing-a-direction-and-checking-what-remains">Removing a direction and checking what remains</a></li><li><a href="#how-closely-do-refusal-and-harmfulness-directions-align">How closely do refusal and harmfulness directions align?</a></li><li><a href="#testing-what-generalizes">Testing what generalizes</a></li><li><a href="#where-we-go-next">Where we go next</a></li><li><a href="#sources">Sources</a></li></ul></nav></aside><div class="article-body"><p>A model refuses a request. What does that tell us?</p>
+<p>It tells us something about its response. It does not, by itself, tell us which features led to that response. The model might distinguish harmful intent from harmless intent. It might react to alarming words. Both could produce the same refusal.</p>
+<p>In this research project, we investigate a related question: <strong>if we remove a refusal-related direction from a model’s internal representations, can we still distinguish harmful requests from safe ones?</strong></p>
+<p>So far, experiments across three small language models suggest that information predictive of harmfulness labels can survive this removal. But a harder test exposes an important limitation: the surviving signal may still depend on wording or dataset features.</p>
+<p>This is a progress report about both findings. <a href="#ref-1">[1]</a></p>
+<h2 id="making-refusal-and-harmfulness-come-apart">Making refusal and harmfulness come apart</h2>
+<p>The first difficulty is experimental design.</p>
+<p>If harmful prompts are always refused and safe prompts are always answered, a probe that predicts harmfulness could simply be predicting refusal. The two labels move together.</p>
+<p>To introduce a useful contrast, we fine-tuned models to refuse both harmful requests and harmless requests that sound alarming, while answering ordinary harmless requests. This deliberately amplifies over-refusal. It is an experimental setup, not a proposed safety policy.</p>
+<p>We then estimated a refusal-related direction by comparing two groups of safe prompts: those assigned refusal responses and those assigned answers. Holding harmfulness constant makes this a more informative comparison than contrasting harmful refusals with harmless answers.</p>
+<p>It does not remove every confound. The two safe groups also differ in wording and dataset source. The estimated direction may therefore capture a mixture of refusal-related features and alarming language.</p>
+<h2 id="removing-a-direction-and-checking-what-remains">Removing a direction and checking what remains</h2>
+<p>We collected hidden states at the last prompt position and removed their component along the estimated direction. We then trained a new linear probe to predict harmfulness labels from the remaining representations.</p>
+<p>The harmfulness evaluation used a separate, topic-matched dataset, with entire topic groups held out for testing. We also compared the result with deleting a random direction.</p>
+<p>The stored results show:</p>
+<div aria-label="Research results" class="research-table" role="region" tabindex="0"><table>
+<thead><tr>
+<th style="text-align:left">Model and evaluated layer</th>
+<th style="text-align:right">Harmfulness AUROC before deletion</th>
+<th style="text-align:right">After deletion and probe retraining</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Qwen2.5-1.5B, layer 13</td>
+<td style="text-align:right">0.932</td>
+<td style="text-align:right">0.905</td>
+</tr>
+<tr>
+<td style="text-align:left">Llama-3.2-1B, layer 7</td>
+<td style="text-align:right">0.963</td>
+<td style="text-align:right">0.971</td>
+</tr>
+<tr>
+<td style="text-align:left">OLMo-2-1B, layer 7</td>
+<td style="text-align:right">0.949</td>
+<td style="text-align:right">0.945</td>
+</tr>
+</tbody>
+</table></div>
+<p>AUROC measures how well a probe ranks harmful examples above safe ones; 0.5 corresponds to chance ranking. These scores are not percentages of requests handled safely.</p>
+<p>The broad pattern is that removing this direction leaves much of the probe’s predictive performance intact. The small increase for Llama should not be interpreted as a safety improvement. These are individual experimental results, not evidence that deletion improves the model. <a href="#ref-2">[2]</a></p>
+<figure class="research-figure"><a aria-label="Open full-size figure: Three-model layer sweep showing direction angles, harmfulness-label probe AUROC, and refusal-label probe AUROC before and after direction removal." href="/assets/blog/refusal-signal/01-three-model-results.png"><img alt="Three-model layer sweep showing direction angles, harmfulness-label probe AUROC, and refusal-label probe AUROC before and after direction removal." decoding="async" height="690" loading="lazy" src="/assets/blog/refusal-signal/01-three-model-results.png" width="2250"/></a><figcaption>Figure 1. Layer-by-layer results across three models, reproduced from the repository. The middle panel shows that harmfulness-label prediction largely survives direction removal; the right panel shows weaker refusal-label prediction on safe prompts. Solid lines denote before removal and dashed lines after removal. Relative depth normalizes the layer index by each model’s total number of layers. These are offline probe measurements, not safety rates during generation. Source: <a href="https://github.com/fw2274/refusal-vs-safety-signal/blob/main/results/figures/compare_models.png">repository figure</a>.</figcaption></figure>
+<p>Refusal-label probes on the edited safe-prompt representations generally weakened substantially, with repeated data splits helping assess variability. This supports a limited conclusion: <strong>the tested harmfulness-label information is not confined to the single direction we removed.</strong> It does not prove that all refusal information has been erased.</p>
+<h2 id="how-closely-do-refusal-and-harmfulness-directions-align">How closely do refusal and harmfulness directions align?</h2>
+<p>We also compared the refusal-related direction with a harmfulness-related direction: the difference between average hidden states for harmful and safe prompts in the matched training data. This direction summarizes a contrast between groups; it is not the learned probe’s weight vector.</p>
+<p>The angle between the two directions changes across layers. An angle of 0° means they point in the same direction; 90° means they are perpendicular. Qwen and OLMo start closer to perpendicular and become more aligned in deeper layers. Llama shows substantial alignment earlier.</p>
+<div aria-label="Research results" class="research-table" role="region" tabindex="0"><table>
+<thead><tr>
+<th style="text-align:left">Model</th>
+<th style="text-align:right">Early-layer angle range</th>
+<th style="text-align:right">Late-layer angle range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Qwen2.5-1.5B</td>
+<td style="text-align:right">80–104°</td>
+<td style="text-align:right">27–37°</td>
+</tr>
+<tr>
+<td style="text-align:left">Llama-3.2-1B</td>
+<td style="text-align:right">51–79°</td>
+<td style="text-align:right">37–46°</td>
+</tr>
+<tr>
+<td style="text-align:left">OLMo-2-1B</td>
+<td style="text-align:right">90–112°</td>
+<td style="text-align:right">39–44°</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Early layers cover the first 30% of model depth; late layers cover the last 40%. Ranges describe variation across layers, not confidence intervals. Source: <a href="#ref-5">[5]</a>.</em></p>
+<p>For Qwen, the angle is approximately 61° at layer 13 and reaches a minimum of 27.5° at layer 19. The two estimated directions therefore overlap substantially in deeper layers without becoming identical. This is consistent with the deletion results: even when the directions are closely aligned, removing the refusal direction can leave information that a new harmfulness probe can use.</p>
+<p>The geometry needs a careful interpretation. Near-perpendicular directions in early layers are not strong evidence of independent concepts, especially where harmfulness is weakly decodable. The harmful-versus-safe contrast can itself include refusal-related features. And after deletion, a remaining mean-difference direction becomes perpendicular to the removed direction by construction—not because the model has learned to separate safety from refusal. The angle describes these measured contrasts; it does not identify a pure harmfulness representation.</p>
+<p>The left panel of Figure 1 shows the full layer-by-layer angle curves alongside the probe results. <a href="#ref-5">[5]</a></p>
+<h2 id="testing-what-generalizes">Testing what generalizes</h2>
+<p>A strong score on held-out topics is encouraging. But what happens when the distinction between harmful and safe prompts changes?</p>
+<p>For Qwen, we applied the matched-data probe to new dataset pairings. At layer 13, it achieved an AUROC of <strong>0.993</strong> when distinguishing harmful questions from ordinary, neutral-sounding safe instructions.</p>
+<p>When the safe examples also sounded alarming, performance was much weaker. On Forbidden Questions versus OR-Bench-Hard, AUROC was <strong>0.508</strong>—approximately chance. <a href="#ref-3">[3]</a></p>
+<figure class="research-figure"><a aria-label="Open full-size figure: Qwen layer 13 probe AUROC on four dataset pairings: scores near 1.0 against neutral safe instructions, but 0.616 and 0.508 against alarming safe prompts." href="/assets/blog/refusal-signal/02-generalization.png"><img alt="Qwen layer 13 probe AUROC on four dataset pairings: scores near 1.0 against neutral safe instructions, but 0.616 and 0.508 against alarming safe prompts." decoding="async" height="940" loading="lazy" src="/assets/blog/refusal-signal/02-generalization.png" width="2160"/></a><figcaption>Figure 2. The same matched-data Qwen probe performs differently depending on the test pairing. Alpaca supplies neutral-sounding safe instructions; OR-Bench-Hard supplies safe requests that sound alarming. Values are drawn from the saved layer-13 results, with 0.5 marking chance ranking. This tests the probe before direction deletion; it does not test the retrained post-deletion probe. No uncertainty intervals are reported for these entries. Source: <a href="#ref-3">[3]</a>.</figcaption></figure>
+<p>These results concern the matched probe’s generalization before deletion. They do not directly measure generalization of the retrained, post-deletion probe. Nevertheless, they challenge the interpretation of the original measurement: if the probe already struggles to distinguish harmful intent from alarming wording, its surviving performance cannot establish a robust safety signal.</p>
+<p>The result is consistent with reliance on surface cues or dataset style. It does not establish exactly which features caused the failure.</p>
+<p>To test whether a broader training contrast could help, the next experiment included several reasons why safe requests can sound dangerous: ambiguous words, benign intent on a potentially harmful topic, and alarming framing.</p>
+<p>We trained on two categories and tested on the third. At Qwen layer 13, AUROC was approximately <strong>0.765</strong>, <strong>0.784</strong>, and <strong>0.587</strong> across the three held-out categories. <a href="#ref-4">[4]</a></p>
+<figure class="research-figure"><a aria-label="Open full-size figure: Leave-one-mechanism-out Qwen layer 13 results: ambiguous words 0.765, benign intent on a harmful topic 0.784, and alarming framing 0.587, with bootstrap confidence intervals." href="/assets/blog/refusal-signal/03-cross-mechanism.png"><img alt="Leave-one-mechanism-out Qwen layer 13 results: ambiguous words 0.765, benign intent on a harmful topic 0.784, and alarming framing 0.587, with bootstrap confidence intervals." decoding="async" height="960" loading="lazy" src="/assets/blog/refusal-signal/03-cross-mechanism.png" width="2160"/></a><figcaption>Figure 3. Training on two mechanisms and testing on the third yields uneven transfer. Points show AUROC; error bars show the repository’s 95% topic-bootstrap intervals, conditional on the trained model. They do not represent variation across independently trained models. This is a separate probe experiment without direction deletion. Source: <a href="#ref-4">[4]</a>.</figcaption></figure>
+<p>This is partial transfer. The probe learned distinctions that extended beyond some training categories, but performance remained weakest on alarming framing. Reporting only the average would hide that weakness.</p>
+<p>These generalization experiments have so far been run on Qwen. The three-model deletion result should not be read as three-model validation of a generalizable harmfulness detector.</p>
+<h2 id="where-we-go-next">Where we go next</h2>
+<p>A cleaner follow-up would study the original models’ own over-refusals: among similarly alarming but safe prompts, compare those the model refuses with those it answers. This could reduce the confounding introduced by deliberately teaching a cue-based policy.</p>
+<p>We also want to test the surviving information under harder distribution shifts and use interventions during generation to investigate whether it affects behavior.</p>
+<p>For Inside AI Safety, the value of this project is already methodological. Looking inside a model gives us another source of evidence—but that evidence needs its own tests. A convincing probe score is a starting point for investigation, not a certificate of understanding.</p>
+<h2 id="sources">Sources</h2>
+<p id="ref-1">[1] <a href="https://github.com/fw2274/refusal-vs-safety-signal/blob/main/README.md">Project overview and methods</a></p>
+<p id="ref-2">[2] Saved deletion results: <a href="https://github.com/fw2274/refusal-vs-safety-signal/blob/main/results/probes/matched/phase7_summary.json">Qwen</a>, <a href="https://github.com/fw2274/refusal-vs-safety-signal/blob/main/results/probes/llama-matched/phase7_summary.json">Llama</a>, <a href="https://github.com/fw2274/refusal-vs-safety-signal/blob/main/results/probes/olmo-matched/phase7_summary.json">OLMo</a></p>
+<p id="ref-3">[3] <a href="https://github.com/fw2274/refusal-vs-safety-signal/blob/main/results/probes/matched/matched_ood.csv">Qwen out-of-distribution results</a></p>
+<p id="ref-4">[4] <a href="https://github.com/fw2274/refusal-vs-safety-signal/blob/main/results/probes/multimech/multimech_summary.json">Cross-mechanism evaluation results</a></p>
+<p id="ref-5">[5] <a href="https://github.com/fw2274/refusal-vs-safety-signal/blob/main/results/figures/compare_models.csv">Three-model geometry and probe results</a></p>
+<hr/>
+<p><em>Research snapshot: repository commit <code>53cd177d</code>. Figures 2–3 visualize stored results; no model training or experiment replication was performed for this article.</em></p>
+<div class="article-end"><a href="/blog/">← Back to the blog</a><a href="/#involved">Get involved →</a></div></div></div></article></main><footer class="wrap"><a class="brand" href="/"><img alt="" height="28" src="/assets/mark.svg" width="28"/><span>inside<span class="brand-light"> ai safety</span></span></a><p>Understanding models. Advancing safety.</p><span>© <span id="year">2026</span> Inside AI Safety</span></footer></body></html>
