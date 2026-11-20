@@ -18,6 +18,19 @@
 @media(max-width:700px){.about{gap:35px}.founder-photo{max-width:100%}.founder-photo img{aspect-ratio:1.1;object-position:50% 35%}.hero-person{font-size:11px}.hero-person>span:first-of-type>span{font-size:9px}.about-copy>p.large-copy{font-size:22px}}
 
 /* Research project details and ways to participate. */
+/* Board members */
+.people-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;list-style:none;padding:0;margin:0}
+.people-grid li{min-width:0}
+.person-card{display:flex;flex-direction:column;align-items:flex-start;height:100%;padding:28px 24px;background:#faf9fc;border:1px solid #dedde9;border-radius:8px;transition:border-color .2s,background .2s}
+.person-card:hover{border-color:#969acc;background:#f0eef9}
+.person-initials{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#e8e7f6;color:#4e508b;font-size:15px;letter-spacing:1px;margin-bottom:26px}
+.person-card h3{font-size:20px;line-height:1.4;font-weight:600;letter-spacing:-.4px;margin-bottom:8px}
+.person-card p{font-size:13px;color:var(--muted);margin-bottom:28px}
+.person-profile{display:flex;justify-content:space-between;gap:12px;width:100%;font-size:12px;color:var(--blue);margin-top:auto;padding-top:16px;border-top:1px solid #dedde9}
+#people + #involved{border-top:1px solid var(--line)}
+@media(max-width:1000px){.people-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.people-grid{grid-template-columns:1fr;gap:16px}.person-card{padding:24px}.person-initials{margin-bottom:20px}}
+
 .research-card{display:flex;flex-direction:column}
 .research-card .number{display:block;margin-bottom:24px;letter-spacing:1px}
 .research-card .project-question{color:var(--ink);line-height:1.65;margin-bottom:22px}
